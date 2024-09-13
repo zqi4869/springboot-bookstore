@@ -1,6 +1,8 @@
 spring:
   application:
     name: Bookstore
+  thymeleaf:
+    cache: false
   jpa:
     hibernate:
       ddl-auto: update
