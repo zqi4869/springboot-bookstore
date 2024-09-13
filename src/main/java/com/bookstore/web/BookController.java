@@ -34,8 +34,9 @@ public class BookController {
     }
 
     @GetMapping("/savebook")
-    public String savebook(Model model, String author, String title, String isbn, Integer year) {
+    public String savebook(Model model, Integer id, String author, String title, String isbn, Integer year) {
         Book book = new Book();
+        book.setId(id);
         book.setIsbn(isbn);
         book.setAuthor(author);
         book.setTitle(title);
@@ -44,4 +45,10 @@ public class BookController {
         return "redirect:/booklist";
     }
 
+    @GetMapping("/editpage/{id}")
+    public String editpage(Model model, @PathVariable("id") Integer id) {
+        Book book = bookService.findBookById(id);
+        model.addAttribute("book", book);
+        return "editpage";
+    }
 }
