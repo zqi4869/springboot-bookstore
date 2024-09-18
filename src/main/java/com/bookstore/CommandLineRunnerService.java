@@ -2,10 +2,13 @@ package com.bookstore;
 
 import com.bookstore.domain.Book;
 import com.bookstore.domain.Category;
+import com.bookstore.domain.User;
 import com.bookstore.service.BookService;
 import com.bookstore.service.CategoryService;
+import com.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,9 +17,26 @@ public class CommandLineRunnerService implements CommandLineRunner {
     BookService bookService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    UserService userService;
 
     @Override
     public void run(String... args) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        User user1 = new User();
+        user1.setId(1);
+        user1.setUsername("user");
+        user1.setPassword(passwordEncoder.encode("user123"));
+        user1.setRole("USER");
+        userService.saveUser(user1);
+
+        User user2 = new User();
+        user2.setId(2);
+        user2.setUsername("admin");
+        user2.setPassword(passwordEncoder.encode("admin123"));
+        user2.setRole("ADMIN");
+        userService.saveUser(user2);
+
         Category category1 = new Category();
         category1.setId(1);
         category1.setName("Art");

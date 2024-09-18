@@ -35,7 +35,7 @@ public class BookController {
     }
 
     @GetMapping("/deletebook/{id}")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deletebook(Model model, @PathVariable("id") Integer id) {
         bookService.deleteBook(id);
         return "redirect:/booklist";
