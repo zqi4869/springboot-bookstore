@@ -1,14 +1,17 @@
 package com.bookstore.domain;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 
 @Entity
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String title;
     private String author;
+
+    @Column(name = "`year`")
     private Integer year;
     private String isbn;
 

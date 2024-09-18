@@ -5,6 +5,7 @@ import com.bookstore.domain.Category;
 import com.bookstore.service.BookService;
 import com.bookstore.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class BookController {
     }
 
     @GetMapping("/deletebook/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String deletebook(Model model, @PathVariable("id") Integer id) {
         bookService.deleteBook(id);
         return "redirect:/booklist";

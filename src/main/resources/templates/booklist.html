@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Book List</title>
@@ -7,6 +8,18 @@
 </head>
 <body style="padding: 20px">
     <h1>Books</h1>
+
+    <div class="col-md-4">
+        <i>Welcome <b sec:authentication="name"></b>,
+            your role is <b sec:authentication="principal.authorities"></b>
+        </i>
+    </div>
+
+    <div class="col-md-4">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+        </form>
+    </div>
 
     <table class="table table-striped">
         <thead>
@@ -27,7 +40,7 @@
                 <td th:text="${book.year}"></td>
                 <td th:text="${book.category.name}"></td>
                 <td>
-                    <a th:href="@{/deletebook/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
+                    <a th:href="@{/deletebook/{id}(id=${book.id})}" sec:authorize="hasAuthority('ROLE_ADMIN')" class="btn btn-danger">Delete</a>
                     <a th:href="@{/editpage/{id}(id=${book.id})}" class="btn btn-primary">Edit</a>
                 </td>
             </tr>
