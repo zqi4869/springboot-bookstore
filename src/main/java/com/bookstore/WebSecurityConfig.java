@@ -30,6 +30,7 @@ public class WebSecurityConfig {
                         .requestMatchers(antMatcher("/css/**")).permitAll()
                         .requestMatchers(antMatcher("/signup")).permitAll()
                         .requestMatchers(antMatcher("/saveuser")).permitAll()
+                        .requestMatchers(antMatcher("/rest/**")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers
