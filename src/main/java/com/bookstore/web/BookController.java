@@ -1,7 +1,9 @@
 package com.bookstore.web;
 
 import com.bookstore.domain.Book;
+import com.bookstore.domain.Category;
 import com.bookstore.service.BookService;
+import com.bookstore.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import java.util.List;
 public class BookController {
     @Autowired
     private BookService bookService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/booklist")
     public String booklist(Model model) {
@@ -24,6 +28,8 @@ public class BookController {
 
     @GetMapping("/addbook")
     public String addbook(Model model) {
+        List<Category> categories = categoryService.findAllCategories();
+        model.addAttribute("categories", categories);
         return "addbook";
     }
 
@@ -34,13 +40,15 @@ public class BookController {
     }
 
     @GetMapping("/savebook")
-    public String savebook(Model model, Integer id, String author, String title, String isbn, Integer year) {
+    public String savebook(Model model, Integer id, String author, String title, String isbn, Integer year, Integer categoryId) {
+        Category category = categoryService.findCategoryById(categoryId);
         Book book = new Book();
         book.setId(id);
         book.setIsbn(isbn);
         book.setAuthor(author);
         book.setTitle(title);
         book.setYear(year);
+        book.setCategory(category);
         bookService.saveBook(book);
         return "redirect:/booklist";
     }
